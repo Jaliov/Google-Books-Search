@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const { Schemma } = mongoose;
+const { Schema } = mongoose;
 
 const BookSchema = new Schema ({
   bookId: {
@@ -8,7 +8,6 @@ const BookSchema = new Schema ({
   },
   title: {
      type: String
-
   },
 authors: {
     type: Array

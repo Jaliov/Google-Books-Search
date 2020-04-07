@@ -32,8 +32,4 @@ return  (
    
 }
 
-
-
-
-
 export default Card; 

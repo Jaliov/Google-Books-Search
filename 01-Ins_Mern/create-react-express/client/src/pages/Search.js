@@ -11,7 +11,7 @@ class Search extends Component {
     searchTerm: "",
     bookList: [],
     savedBookIds: [],
-    error: null,
+    error: null
   };
 
   handleInputChange =  event => {
@@ -27,14 +27,13 @@ class Search extends Component {
     if (this.state.searchTerm === "") {
       return this.setState({
         error: "Please put in a title."});
-    
     }
 
     searchGoogleBooks(this.state.searchTerm)
       .then((res) => {
         const { items } = res.data;
         this.setState({ error: null})
-         
+        
       
         const bookListCleaned = items.map( book => {
           return {
@@ -49,15 +48,15 @@ class Search extends Component {
         });
         return this.setState({
           bookList: bookListCleaned,
-          searchTerm: ""  })
+          searchTerm: ''  })
         })
     
-        .then(this.retrieveSaveBooks)
+        .then(this.retrieveSavedBooks)
         .catch( err =>
           this.setState({
             error: err  }))
-        }    
-  
+        };    
+      
   retrieveSavedBooks = () => {
     getSavedBooks()
       .then(res => {
@@ -70,7 +69,7 @@ class Search extends Component {
           error: err  })))
         };
 
-  handleBookSaveBook = (bookId) => {
+  handleBookSaveBook = bookId => {
     const book = this.state.bookList.find((book) => book.bookId === bookId);
     saveBook(book)
       .then(() => {
@@ -79,7 +78,8 @@ class Search extends Component {
       })
       .catch(err => this.setState({ error: err }));
     };
-  render() {
+ 
+    render() {
     return (
       <>
         <Jumbotron
@@ -91,7 +91,7 @@ class Search extends Component {
         <Container>
           <Row>
             <Column xs={12} md={4}>
-              <Card title={"Search for a book"}>
+              <Card title={"Search For a Book"}>
                 <form onSubmit={this.handleFormSubmit}>
                   <input
                     type="text"
@@ -101,7 +101,7 @@ class Search extends Component {
                     value={this.state.searchTerm}
                     name="searchTerm"
                   />
-                  {this.state.error && this.state.searchTerm.length && (
+                  {this.state.error && !this.state.searchTerm.length && (
                     <div className="alert alert-danger my-2">
                       {this.state.error}
                     </div>
@@ -112,7 +112,6 @@ class Search extends Component {
                 </form>
               </Card>
            </Column>
-
          <Column xs={12} md={8}>
               {!this.state.bookList.length ? (
                 <h2 className="text-center">Search for books to begin</h2>
@@ -122,12 +121,12 @@ class Search extends Component {
                     <Column key={book.bookId} md={4}>
                      
                       <Card
-                        title={book.title}hh
+                        title={book.title}
                         image={book.image ? book.image : undefined}
                       >
                     <small className="text-muted">
                           {`By: ${
-                            book.authors.length ? book.author.join(", ") : null
+                            book.authors.length ? book.author.join(', ') : null
                           }`}
                         </small>
                         <p>{book.description}</p>
@@ -154,6 +153,5 @@ class Search extends Component {
     );
   }
 }
-
 
 export default Search;
