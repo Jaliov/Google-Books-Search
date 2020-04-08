@@ -8,7 +8,7 @@ import { removeBook, getSavedBooks } from "../utils/API";
 
 class Saved extends Component {
   state = {
-    bookList: [],
+    bookList: []
   };
 
   componentDidMount() {
@@ -16,18 +16,18 @@ class Saved extends Component {
   }
 
   handleGetSavedBooks = () => {
-    getSavedBooks()
-      .then(({ data: bookList }) => {
-        this.setState({ bookList });
-      })
-      .catch((err) => console.log(err));
-  };
+    getSavedBooks().then(({ data: bookList }) => {
+      this.setState({ bookList });
+    })
+    .catch((err) => console.log(err));
+};
+      
 
   handleRemoveBook = (bookId) => {
-    removeBook(bookId)
-      .then(this.handleGetSavedBooks)
-      .catch((err) => console.log(err));
-  };
+    removeBook(bookId).then(this.handleGetSavedBooks)
+    .catch((err) => console.log(err));
+};
+  
 
   render() {
     return (
@@ -52,15 +52,14 @@ class Saved extends Component {
                       image={book.image ? book.large : undefined}
                     >
                       <small className="text-muted">
-                        {`By: 
-                        ${
-                          book.authors.length ? book.authors.join(", ") : null
-                        }`}
+                      {`By: ${
+                            book.authors.length ? book.authors.join(', ') : null
+                          }`}
                       </small>
 
                       <p>{book.description}</p>
                       <button
-                        onClick={() => this.handleRemoveBook(book._id)}
+                        onClick={() => this.handleGetSavedBooks(book._id)}
                         className="btn btn-danger btn-sm"
                       >Remove Books
                       </button>

@@ -25,9 +25,9 @@ mongoose.connect(
 );
 
 
-app.listen(PORT, () => {
-  console.log(`🌎 ==> API server now on port ${PORT}!`);
-});
+// app.listen(PORT, () => {
+//   console.log(`🌎 ==> API server now on port ${PORT}!`);
+// });
 
 app.listen(PORT, () => console.log(`Listening on http//localhost:${PORT}`));
 
