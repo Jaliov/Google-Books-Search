@@ -28,9 +28,11 @@ class Search extends Component {
         error: "Please put in a title."});
     }
 
-    searchGoogleBooks(this.state.searchTerm)
-    .then((res) => { const { items } = res.data; this.setState({ error: null})
-        const bookListCleaned = items.map( book => {
+    searchGoogleBooks(this.state.searchTerm).then((res) =>
+     { const { items } = res.data; 
+     this.setState({ error: null})
+        
+    const bookListCleaned = items.map( book => {
           return {
             bookId: book.id,
             title: book.volumeInfo.title,
@@ -41,19 +43,19 @@ class Search extends Component {
               : ''
           };
         });
-        console.log(bookListCleaned);
-        this.setState({
-          bookList: bookListCleaned,
-          searchTerm: ''  },()=>this.retrieveSavedBooks)})
-    
-        .catch( err =>
-          this.setState({
-            error: err  }))
-        };    
-      
-       
-      
-  retrieveSavedBooks = () => {
+
+        return this.setState({ bookList: bookListCleaned, searchTerm: ''});
+     }).then(this.retrieveSavedBooks)
+     .catch( err =>
+       this.setState({
+         error: err  }))
+     };    
+
+        // console.log(bookListCleaned);
+        // this.setState({
+        //   bookList: bookListCleaned,
+        //   searchTerm: ''  },()=>this.retrieveSavedBooks)})  
+     retrieveSavedBooks = () => {
     getSavedBooks().then(res => {
       const savedBookIds = res.data.map(book => book.bookId);
       this.setState({
@@ -64,7 +66,6 @@ class Search extends Component {
         error: err  })))
       };
      
-
   handleBookSaveBook = bookId => {
     const book = this.state.bookList.find((book) => book.bookId === bookId);
     saveBook(book).then(() => {
